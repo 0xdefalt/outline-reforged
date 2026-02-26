@@ -11,7 +11,6 @@ import net.minecraft.text.Text;
 public final class OutlineReforgedConfigScreen {
 
     private OutlineReforgedConfigScreen() {
-        // TODO: not yet implemented
     }
 
     public static Screen create(Screen parent) {
@@ -22,44 +21,9 @@ public final class OutlineReforgedConfigScreen {
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
         OutlineConfig config = OutlineConfigManager.getConfig();
         category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Alpha"), config.outlineAlpha, 0, 255)
-                .setDefaultValue(255)
-                .setSaveConsumer(value -> config.outlineAlpha = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Red"), config.outlineRed, 0, 255)
-                .setDefaultValue(0)
-                .setSaveConsumer(value -> config.outlineRed = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Green"), config.outlineGreen, 0, 255)
-                .setDefaultValue(0)
-                .setSaveConsumer(value -> config.outlineGreen = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Blue"), config.outlineBlue, 0, 255)
-                .setDefaultValue(0)
-                .setSaveConsumer(value -> config.outlineBlue = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Fill Alpha"), config.fillAlpha, 0, 255)
-                .setDefaultValue(40)
-                .setSaveConsumer(value -> config.fillAlpha = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Fill Red"), config.fillRed, 0, 255)
-                .setDefaultValue(0)
-                .setSaveConsumer(value -> config.fillRed = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Fill Green"), config.fillGreen, 0, 255)
-                .setDefaultValue(255)
-                .setSaveConsumer(value -> config.fillGreen = value)
-                .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Fill Blue"), config.fillBlue, 0, 255)
-                .setDefaultValue(255)
-                .setSaveConsumer(value -> config.fillBlue = value)
+                .startAlphaColorField(Text.literal("Outline Color"), config.getOutlineArgb())
+                .setDefaultValue(0xFF00FFFF)
+                .setSaveConsumer(config::setOutlineArgb)
                 .build());
         category.addEntry(entryBuilder
                 .startFloatField(Text.literal("Outline Thickness"), config.outlineThickness)

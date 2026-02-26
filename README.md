@@ -4,8 +4,7 @@ A Fabric client-side Minecraft mod that lets you customize the block outline whe
 
 ## Features
 
-- Outline color customization in ARGB
-- Fill overlay customization in ARGB
+- Outline color control
 - Outline thickness control
 - Outline glow intensity control
 - Rainbow mode for outline and fill
@@ -28,8 +27,7 @@ A Fabric client-side Minecraft mod that lets you customize the block outline whe
 
 Open `Mod Menu -> Defalt's Outline Reforged -> Configure` to change:
 
-- Outline ARGB
-- Fill ARGB
+- Outline color (ARGB)
 - Outline thickness
 - Outline glow
 - Rainbow toggle

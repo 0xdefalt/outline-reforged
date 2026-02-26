@@ -19,6 +19,17 @@ public class OutlineConfig {
         return ((outlineAlpha & 0xFF) << 24) | ((outlineRed & 0xFF) << 16) | ((outlineGreen & 0xFF) << 8) | (outlineBlue & 0xFF);
     }
 
+    public int getOutlineArgb() {
+        return toArgb();
+    }
+
+    public void setOutlineArgb(int argb) {
+        outlineAlpha = (argb >>> 24) & 0xFF;
+        outlineRed = (argb >>> 16) & 0xFF;
+        outlineGreen = (argb >>> 8) & 0xFF;
+        outlineBlue = argb & 0xFF;
+    }
+
     public int fillToArgb() {
         return ((fillAlpha & 0xFF) << 24) | ((fillRed & 0xFF) << 16) | ((fillGreen & 0xFF) << 8) | (fillBlue & 0xFF);
     }
