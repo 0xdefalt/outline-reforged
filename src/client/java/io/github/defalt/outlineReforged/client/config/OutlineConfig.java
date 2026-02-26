@@ -6,10 +6,6 @@ public class OutlineConfig {
     public int outlineRed = 0;
     public int outlineGreen = 255;
     public int outlineBlue = 255;
-    public int fillAlpha = 40;
-    public int fillRed = 0;
-    public int fillGreen = 255;
-    public int fillBlue = 255;
     public float outlineThickness = 2.0F;
     public int outlineGlow = 0;
     public boolean rainbowEnabled = false;
@@ -28,10 +24,6 @@ public class OutlineConfig {
         outlineRed = (argb >>> 16) & 0xFF;
         outlineGreen = (argb >>> 8) & 0xFF;
         outlineBlue = argb & 0xFF;
-    }
-
-    public int fillToArgb() {
-        return ((fillAlpha & 0xFF) << 24) | ((fillRed & 0xFF) << 16) | ((fillGreen & 0xFF) << 8) | (fillBlue & 0xFF);
     }
 
 }
