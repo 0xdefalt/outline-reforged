@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "outline-reforged",
+  "version": "${version}",
+  "name": "Defalt's Outline Reforged",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/outline-reforged/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "io.github.defalt.outlineReforged.client.OutlineReforgedDataGenerator"
+    ],
+    "client": [
+      "io.github.defalt.outlineReforged.client.OutlineReforgedClient"
+    ],
+    "main": [
+      "io.github.defalt.outlineReforged.OutlineReforged"
+    ],
+    "modmenu": [
+      "io.github.defalt.outlineReforged.client.integration.OutlineReforgedModMenu"
+    ]
+  },
+  "mixins": [
+    "outline-reforged.mixins.json",
+    {
+      "config": "outline-reforged.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "cloth-config": "*",
+    "modmenu": "*"
+  }
+}
