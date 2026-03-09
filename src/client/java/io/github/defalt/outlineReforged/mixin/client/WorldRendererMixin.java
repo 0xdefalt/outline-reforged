@@ -1,7 +1,6 @@
 package io.github.defalt.outlineReforged.mixin.client;
 
-import io.github.defalt.outlineReforged.client.config.OutlineConfig;
-import io.github.defalt.outlineReforged.client.config.OutlineConfigManager;
+import io.github.defalt.outlineReforged.client.render.OutlineRenderSupport;
 import net.minecraft.client.render.WorldRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,28 +8,34 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
+    private static boolean outlineReforged$loggedMixinActive;
 
     @ModifyArg(
-            method = "renderTargetBlockOutline",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;DDDLnet/minecraft/client/render/state/OutlineRenderState;IF)V"),
-            index = 6
+            method = "drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;DDDLnet/minecraft/client/render/state/OutlineRenderState;IF)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexRendering;drawOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDIF)V"),
+            index = 6,
+            require = 1
     )
-    private int outlineReforged$modifyOutlineColor(int originalColor) {
-        OutlineConfig config = OutlineConfigManager.getConfig();
-        int argb = OutlineConfigManager.getCurrentArgbColor();
-        int alpha = Math.min(255, ((argb >>> 24) & 0xFF) + config.outlineGlow * 12);
-        return (alpha << 24) | (argb & 0x00FFFFFF);
+    private int outlineReforged$replaceColor(int originalColor) {
+        outlineReforged$logMixinActive();
+        return OutlineRenderSupport.resolveConfiguredColor();
     }
 
     @ModifyArg(
-            method = "renderTargetBlockOutline",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;DDDLnet/minecraft/client/render/state/OutlineRenderState;IF)V"),
-            index = 7
+            method = "drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;DDDLnet/minecraft/client/render/state/OutlineRenderState;IF)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexRendering;drawOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDIF)V"),
+            index = 7,
+            require = 1
     )
-    private float outlineReforged$modifyOutlineWidth(float originalWidth) {
-        OutlineConfig outlineConfig = OutlineConfigManager.getConfig();
-        float thickness = Math.max(0.5F, outlineConfig.outlineThickness);
-        return thickness + (outlineConfig.outlineGlow * 0.15F);
+    private float outlineReforged$replaceWidth(float originalWidth) {
+        outlineReforged$logMixinActive();
+        return OutlineRenderSupport.resolveConfiguredLineWidth();
+    }
+
+    private static void outlineReforged$logMixinActive() {
+        if (!outlineReforged$loggedMixinActive) {
+            outlineReforged$loggedMixinActive = true;
+        }
     }
 
 }

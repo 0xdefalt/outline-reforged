@@ -11,46 +11,45 @@ import net.minecraft.text.Text;
 public final class OutlineReforgedConfigScreen {
 
     private OutlineReforgedConfigScreen() {
+        // TODO: not yet implemented
     }
 
     public static Screen create(Screen parent) {
-        ConfigBuilder builder = ConfigBuilder.create()
-                .setParentScreen(parent)
-                .setTitle(Text.literal("Defalt's Outline Reforged"));
-        ConfigCategory category = builder.getOrCreateCategory(Text.literal("Outline"));
-        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        OutlineConfig config = OutlineConfigManager.getConfig();
-        category.addEntry(entryBuilder
-                .startAlphaColorField(Text.literal("Outline Color"), config.getOutlineArgb())
-                .setDefaultValue(0xFF00FFFF)
-                .setSaveConsumer(config::setOutlineArgb)
+        ConfigBuilder configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(Text.literal("Defalt's Outline Reforged"));
+        ConfigCategory configCategory = configBuilder.getOrCreateCategory(Text.literal("Outline"));
+        ConfigEntryBuilder configEntryBuilder = configBuilder.entryBuilder();
+        OutlineConfig outlineConfig = OutlineConfigManager.getOutlineConfig();
+        configCategory.addEntry(configEntryBuilder
+                .startAlphaColorField(Text.literal("Outline Color"), outlineConfig.getOutlineArgb())
+                .setDefaultValue(0xFFFFFFFF)
+                .setSaveConsumer(outlineConfig::setOutlineArgb)
                 .build());
-        category.addEntry(entryBuilder
-                .startFloatField(Text.literal("Outline Thickness"), config.outlineThickness)
+        configCategory.addEntry(configEntryBuilder
+                .startFloatField(Text.literal("Outline Thickness"), outlineConfig.outlineThickness)
                 .setMin(0.5F)
                 .setMax(16.0F)
                 .setDefaultValue(2.0F)
-                .setSaveConsumer(value -> config.outlineThickness = value)
+                .setSaveConsumer(value -> outlineConfig.outlineThickness = value)
                 .build());
-        category.addEntry(entryBuilder
-                .startIntSlider(Text.literal("Outline Glow"), config.outlineGlow, 0, 10)
+        configCategory.addEntry(configEntryBuilder
+                .startIntSlider(Text.literal("Outline Glow"), outlineConfig.outlineGlow, 0, 10)
                 .setDefaultValue(0)
-                .setSaveConsumer(value -> config.outlineGlow = value)
+                .setSaveConsumer(value -> outlineConfig.outlineGlow = value)
                 .build());
-        category.addEntry(entryBuilder
-                .startBooleanToggle(Text.literal("Rainbow"), config.rainbowEnabled)
+        configCategory.addEntry(configEntryBuilder
+                .startBooleanToggle(Text.literal("Rainbow"), outlineConfig.rainbowEnabled)
                 .setDefaultValue(false)
-                .setSaveConsumer(value -> config.rainbowEnabled = value)
+                .setSaveConsumer(value -> outlineConfig.rainbowEnabled = value)
                 .build());
-        category.addEntry(entryBuilder
-                .startFloatField(Text.literal("Rainbow Cycles Per Second"), config.rainbowCyclesPerSecond)
+        configCategory.addEntry(configEntryBuilder
+                .startFloatField(Text.literal("Rainbow Cycles Per Second"), outlineConfig.rainbowCyclesPerSecond)
                 .setMin(0.01F)
                 .setMax(10.0F)
-                .setDefaultValue(0.15F)
-                .setSaveConsumer(value -> config.rainbowCyclesPerSecond = value)
+                .setDefaultValue(0.10F)
+                .setSaveConsumer(value -> outlineConfig.rainbowCyclesPerSecond = value)
                 .build());
-        builder.setSavingRunnable(OutlineConfigManager::save);
-        return builder.build();
+        configBuilder.setSavingRunnable(OutlineConfigManager::save);
+        return configBuilder.build();
     }
 
 }

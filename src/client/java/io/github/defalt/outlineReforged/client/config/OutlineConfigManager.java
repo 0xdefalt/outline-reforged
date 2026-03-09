@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.awt.*;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -15,7 +14,7 @@ public final class OutlineConfigManager {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("outline-reforged.json");
-    private static OutlineConfig config = new OutlineConfig();
+    private static OutlineConfig outlineConfig = new OutlineConfig();
 
     private OutlineConfigManager() {
         // TODO: not yet implemented
@@ -29,33 +28,33 @@ public final class OutlineConfigManager {
         try (Reader reader = Files.newBufferedReader(PATH)) {
             OutlineConfig outlineConfig = GSON.fromJson(reader, OutlineConfig.class);
             if (outlineConfig != null) {
-                config = sanitize(outlineConfig);
+                OutlineConfigManager.outlineConfig = sanitize(outlineConfig);
             } else {
-                config = new OutlineConfig();
+                OutlineConfigManager.outlineConfig = new OutlineConfig();
             }
-        } catch (IOException ioException) {
-            config = new OutlineConfig();
+        } catch (Exception exception) {
+            outlineConfig = new OutlineConfig();
         }
     }
 
     public static void save() {
-        config = sanitize(config);
+        outlineConfig = sanitize(outlineConfig);
         try {
             Files.createDirectories(PATH.getParent());
             try (Writer writer = Files.newBufferedWriter(PATH)) {
-                GSON.toJson(config, writer);
+                GSON.toJson(outlineConfig, writer);
             }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 
-    public static OutlineConfig getConfig() {
-        return config;
+    public static OutlineConfig getOutlineConfig() {
+        return outlineConfig;
     }
 
     public static int getCurrentArgbColor() {
-        OutlineConfig current = config;
+        OutlineConfig current = outlineConfig;
         int alpha = clamp(current.outlineAlpha, 0, 255);
         if (!current.rainbowEnabled) {
             return current.toArgb();
