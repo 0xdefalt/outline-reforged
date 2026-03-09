@@ -10,30 +10,20 @@
   "icon": "assets/outline-reforged/icon.png",
   "environment": "client",
   "entrypoints": {
-    "fabric-datagen": [
-      "io.github.defalt.outlineReforged.client.OutlineReforgedDataGenerator"
-    ],
     "client": [
       "io.github.defalt.outlineReforged.client.OutlineReforgedClient"
-    ],
-    "main": [
-      "io.github.defalt.outlineReforged.OutlineReforged"
     ],
     "modmenu": [
       "io.github.defalt.outlineReforged.client.integration.OutlineReforgedModMenu"
     ]
   },
   "mixins": [
-    "outline-reforged.mixins.json",
-    {
-      "config": "outline-reforged.client.mixins.json",
-      "environment": "client"
-    }
+    "outline-reforged.client.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}",
+    "minecraft": ">=1.21.11",
     "cloth-config": "*",
     "modmenu": "*"
   }

@@ -4,24 +4,24 @@ A Fabric client-side Minecraft mod that lets you customize the block outline whe
 
 ## Features
 
+- Lightweight
+- Open-source
 - Outline color control
 - Outline thickness control
-- Outline glow intensity control
+- Outline glow control
 - Rainbow mode for outline
 - Rainbow speed control in cycles per second
 - In-game config screen via Mod Menu + Cloth Config
 
 ## Requisites
 
-- Java 21
-- Fabric Loader
 - Fabric API
 - Mod Menu
 - Cloth Config
 
 ## Supported Versions
 
-- Minecraft `1.21.11`
+- Minecraft `1.21.11+`
 
 ## Configuration
 
