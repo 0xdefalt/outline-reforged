@@ -1,23 +1,27 @@
 # Defalt's Outline Reforged
 
-A Fabric client-side Minecraft mod that lets you customize the block outline when targeting blocks.
+A Fabric client-side Minecraft mod that lets you customize the targeted block outline.
 
 ## Features
 
-- Lightweight
-- Open-source
-- Outline color control
+- Client-side only
+- In-game config screen via Mod Menu + Cloth Config
+- Outline color in ARGB
 - Outline thickness control
 - Outline glow control
-- Rainbow mode for outline
-- Rainbow speed control in cycles per second
-- In-game config screen via Mod Menu + Cloth Config
+- Color modes:
+    - `Static`
+    - `Rainbow`
+    - `Gradient (2 Colors)`
+    - `Pulse`
+    - `Breathing`
+- Animation speed control
 
-## Requisites
+## Requirements
 
 - Fabric API
 - Mod Menu
-- Cloth Config
+- Cloth Config API
 
 ## Supported Versions
 
@@ -25,14 +29,17 @@ A Fabric client-side Minecraft mod that lets you customize the block outline whe
 
 ## Configuration
 
-Open `Mod Menu -> Defalt's Outline Reforged -> Configure` to change:
+Open `Mod Menu -> Defalt's Outline Reforged -> Configure`.
 
-- Outline color (ARGB)
-- Outline thickness
-- Outline glow
-- Rainbow toggle
-- Rainbow cycles per second
+### Available settings
 
-Config is saved to:
+- `Color Mode`: `Static`, `Rainbow`, `Gradient (2 Colors)`, `Pulse`, `Breathing`
+- `Primary Color` (ARGB)
+- `Secondary Color (Gradient/Pulse)` (ARGB)
+- `Animation Cycles Per Second` (for animated modes)
+- `Outline Thickness`
+- `Outline Glow`
 
-- `config/outline-reforged.json`
+Config file path:
+
+- `config/defalt-outline-reforged.json`

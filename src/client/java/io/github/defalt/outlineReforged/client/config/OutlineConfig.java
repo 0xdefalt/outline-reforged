@@ -2,17 +2,24 @@ package io.github.defalt.outlineReforged.client.config;
 
 public class OutlineConfig {
 
-    public int outlineAlpha = 0;
-    public int outlineRed = 0;
-    public int outlineGreen = 0;
-    public int outlineBlue = 0;
+    public int outlineAlpha = 255;
+    public int outlineRed = 255;
+    public int outlineGreen = 255;
+    public int outlineBlue = 255;
+    public int secondaryAlpha = 255;
+    public int secondaryRed = 255;
+    public int secondaryGreen = 255;
+    public int secondaryBlue = 255;
     public float outlineThickness = 2.0F;
     public int outlineGlow = 0;
-    public boolean rainbowEnabled = false;
-    public float rainbowCyclesPerSecond = 0.10F;
+    public String colorMode = OutlineColorMode.STATIC.id();
+    public float animationCyclesPerSecond = 0.10F;
 
     public int toArgb() {
-        return ((outlineAlpha & 0xFF) << 24) | ((outlineRed & 0xFF) << 16) | ((outlineGreen & 0xFF) << 8) | (outlineBlue & 0xFF);
+        return ((outlineAlpha & 0xFF) << 24)
+                | ((outlineRed & 0xFF) << 16)
+                | ((outlineGreen & 0xFF) << 8)
+                | (outlineBlue & 0xFF);
     }
 
     public int getOutlineArgb() {
@@ -24,6 +31,28 @@ public class OutlineConfig {
         outlineRed = (argb >>> 16) & 0xFF;
         outlineGreen = (argb >>> 8) & 0xFF;
         outlineBlue = argb & 0xFF;
+    }
+
+    public int getSecondaryArgb() {
+        return ((secondaryAlpha & 0xFF) << 24)
+                | ((secondaryRed & 0xFF) << 16)
+                | ((secondaryGreen & 0xFF) << 8)
+                | (secondaryBlue & 0xFF);
+    }
+
+    public void setSecondaryArgb(int argb) {
+        secondaryAlpha = (argb >>> 24) & 0xFF;
+        secondaryRed = (argb >>> 16) & 0xFF;
+        secondaryGreen = (argb >>> 8) & 0xFF;
+        secondaryBlue = argb & 0xFF;
+    }
+
+    public OutlineColorMode getColorMode() {
+        return OutlineColorMode.fromId(colorMode);
+    }
+
+    public void setColorMode(OutlineColorMode mode) {
+        colorMode = mode.id();
     }
 
 }
