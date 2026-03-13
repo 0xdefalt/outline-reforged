@@ -26,5 +26,12 @@
     "minecraft": ">=1.21.11",
     "cloth-config": "*",
     "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.kofi": "https://ko-fi.com/0xdefalt"
+      }
+    }
   }
 }
