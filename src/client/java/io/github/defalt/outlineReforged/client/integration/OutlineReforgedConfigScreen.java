@@ -6,8 +6,8 @@ import io.github.defalt.outlineReforged.client.config.OutlineConfigManager;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public final class OutlineReforgedConfigScreen {
 
@@ -16,41 +16,41 @@ public final class OutlineReforgedConfigScreen {
     }
 
     public static Screen create(Screen parent) {
-        ConfigBuilder configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(Text.literal("Defalt's Outline Reforged"));
-        ConfigCategory configCategory = configBuilder.getOrCreateCategory(Text.literal("Outline"));
+        ConfigBuilder configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(Component.literal("Defalt's Outline Reforged"));
+        ConfigCategory configCategory = configBuilder.getOrCreateCategory(Component.literal("Outline"));
         ConfigEntryBuilder configEntryBuilder = configBuilder.entryBuilder();
         OutlineConfig outlineConfig = OutlineConfigManager.getOutlineConfig();
         configCategory.addEntry(configEntryBuilder
-                .startEnumSelector(Text.literal("Color Mode"), OutlineColorMode.class, outlineConfig.getColorMode())
+                .startEnumSelector(Component.literal("Color Mode"), OutlineColorMode.class, outlineConfig.getColorMode())
                 .setDefaultValue(OutlineColorMode.STATIC)
                 .setSaveConsumer(outlineConfig::setColorMode)
                 .build());
         configCategory.addEntry(configEntryBuilder
-                .startAlphaColorField(Text.literal("Primary Color"), outlineConfig.getOutlineArgb())
+                .startAlphaColorField(Component.literal("Primary Color"), outlineConfig.getOutlineArgb())
                 .setDefaultValue(0xFFFFFFFF)
                 .setSaveConsumer(outlineConfig::setOutlineArgb)
                 .build());
         configCategory.addEntry(configEntryBuilder
-                .startAlphaColorField(Text.literal("Secondary Color (Gradient/Pulse)"), outlineConfig.getSecondaryArgb())
+                .startAlphaColorField(Component.literal("Secondary Color (Gradient/Pulse)"), outlineConfig.getSecondaryArgb())
                 .setDefaultValue(0xFFFFFFFF)
                 .setSaveConsumer(outlineConfig::setSecondaryArgb)
                 .build());
         configCategory.addEntry(configEntryBuilder
-                .startFloatField(Text.literal("Animation Cycles Per Second"), outlineConfig.animationCyclesPerSecond)
+                .startFloatField(Component.literal("Animation Cycles Per Second"), outlineConfig.animationCyclesPerSecond)
                 .setMin(0.01F)
                 .setMax(10.0F)
                 .setDefaultValue(0.10F)
                 .setSaveConsumer(value -> outlineConfig.animationCyclesPerSecond = value)
                 .build());
         configCategory.addEntry(configEntryBuilder
-                .startFloatField(Text.literal("Outline Thickness"), outlineConfig.outlineThickness)
+                .startFloatField(Component.literal("Outline Thickness"), outlineConfig.outlineThickness)
                 .setMin(0.5F)
                 .setMax(16.0F)
                 .setDefaultValue(2.0F)
                 .setSaveConsumer(value -> outlineConfig.outlineThickness = value)
                 .build());
         configCategory.addEntry(configEntryBuilder
-                .startIntSlider(Text.literal("Outline Glow"), outlineConfig.outlineGlow, 0, 10)
+                .startIntSlider(Component.literal("Outline Glow"), outlineConfig.outlineGlow, 0, 10)
                 .setDefaultValue(0)
                 .setSaveConsumer(value -> outlineConfig.outlineGlow = value)
                 .build());
