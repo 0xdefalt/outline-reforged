@@ -1,8 +1,8 @@
-package io.github.defalt.outlineReforged.client.config;
+package io.github.defalt.blockselector.client.config;
 
 import java.util.Locale;
 
-public enum OutlineColorMode {
+public enum BlockSelectorColorMode {
 
     STATIC("static", "Static"),
     RAINBOW("rainbow", "Rainbow"),
@@ -13,7 +13,7 @@ public enum OutlineColorMode {
     private final String id;
     private final String displayName;
 
-    OutlineColorMode(String id, String displayName) {
+    BlockSelectorColorMode(String id, String displayName) {
         this.id = id;
         this.displayName = displayName;
     }
@@ -26,12 +26,12 @@ public enum OutlineColorMode {
         return displayName;
     }
 
-    public static OutlineColorMode fromId(String id) {
+    public static BlockSelectorColorMode fromId(String id) {
         if (id == null || id.isBlank()) {
             return STATIC;
         }
         String normalizedId = id.toLowerCase(Locale.ROOT);
-        for (OutlineColorMode mode : values()) {
+        for (BlockSelectorColorMode mode : values()) {
             if (mode.id.equals(normalizedId)) {
                 return mode;
             }

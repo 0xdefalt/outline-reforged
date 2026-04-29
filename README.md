@@ -1,6 +1,6 @@
-# Defalt's Outline Reforged
+# Defalt's Block Selector
 
-A Fabric client-side Minecraft mod that lets you customize the targeted block outline.
+Java mod with primary purpose of customize the block selector.
 
 ## Features
 
@@ -23,13 +23,9 @@ A Fabric client-side Minecraft mod that lets you customize the targeted block ou
 - Mod Menu
 - Cloth Config API
 
-## Supported Versions
-
-- `26.1`, `26.1.1`, and `26.1.2`
-
 ## Configuration
 
-Open `Mod Menu -> Defalt's Outline Reforged -> Configure`.
+Open `Mod Menu -> Defalt's Block Selector -> Configure`.
 
 ### Available settings
 
@@ -42,4 +38,4 @@ Open `Mod Menu -> Defalt's Outline Reforged -> Configure`.
 
 Config file path:
 
-- `config/defalt-outline-reforged.json`
+- `config/defalt-block-selector.json`

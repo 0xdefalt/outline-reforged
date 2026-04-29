@@ -1,6 +1,6 @@
-package io.github.defalt.outlineReforged.mixin.client;
+package io.github.defalt.blockselector.mixin.client;
 
-import io.github.defalt.outlineReforged.client.render.OutlineRenderSupport;
+import io.github.defalt.blockselector.client.render.BlockSelectorRenderSupport;
 import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LevelRenderer.class)
 public abstract class WorldRendererMixin {
-    private static boolean outlineReforged$loggedMixinActive;
+    private static boolean blockSelector$loggedMixinActive;
 
     @ModifyArg(
             method = "renderHitOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDLnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IF)V",
@@ -16,9 +16,9 @@ public abstract class WorldRendererMixin {
             index = 6,
             require = 1
     )
-    private int outlineReforged$replaceColor(int originalColor) {
-        outlineReforged$logMixinActive();
-        return OutlineRenderSupport.resolveConfiguredColor();
+    private int blockSelector$replaceColor(int originalColor) {
+        blockSelector$logMixinActive();
+        return BlockSelectorRenderSupport.resolveConfiguredColor();
     }
 
     @ModifyArg(
@@ -27,14 +27,14 @@ public abstract class WorldRendererMixin {
             index = 7,
             require = 1
     )
-    private float outlineReforged$replaceWidth(float originalWidth) {
-        outlineReforged$logMixinActive();
-        return OutlineRenderSupport.resolveConfiguredLineWidth();
+    private float blockSelector$replaceWidth(float originalWidth) {
+        blockSelector$logMixinActive();
+        return BlockSelectorRenderSupport.resolveConfiguredLineWidth();
     }
 
-    private static void outlineReforged$logMixinActive() {
-        if (!outlineReforged$loggedMixinActive) {
-            outlineReforged$loggedMixinActive = true;
+    private static void blockSelector$logMixinActive() {
+        if (!blockSelector$loggedMixinActive) {
+            blockSelector$loggedMixinActive = true;
         }
     }
 
