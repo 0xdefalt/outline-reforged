@@ -1,6 +1,6 @@
 # Defalt's Block Selector
 
-Java mod with primary purpose of customize the block selector outline.
+Java mod with primary purpose of customize the block selector.
 
 ## Features
 
