@@ -1,6 +1,6 @@
-package io.github.defalt.outlineReforged.client.config;
+package io.github.defalt.blockselector.client.config;
 
-public class OutlineConfig {
+public class BlockSelectorConfig {
 
     public int outlineAlpha = 255;
     public int outlineRed = 255;
@@ -12,7 +12,7 @@ public class OutlineConfig {
     public int secondaryBlue = 255;
     public float outlineThickness = 2.0F;
     public int outlineGlow = 0;
-    public String colorMode = OutlineColorMode.STATIC.id();
+    public String colorMode = BlockSelectorColorMode.STATIC.id();
     public float animationCyclesPerSecond = 0.10F;
 
     public int toArgb() {
@@ -47,11 +47,11 @@ public class OutlineConfig {
         secondaryBlue = argb & 0xFF;
     }
 
-    public OutlineColorMode getColorMode() {
-        return OutlineColorMode.fromId(colorMode);
+    public BlockSelectorColorMode getColorMode() {
+        return BlockSelectorColorMode.fromId(colorMode);
     }
 
-    public void setColorMode(OutlineColorMode mode) {
+    public void setColorMode(BlockSelectorColorMode mode) {
         colorMode = mode.id();
     }
 

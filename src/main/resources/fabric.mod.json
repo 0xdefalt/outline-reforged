@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "outline-reforged",
+  "id": "block-selector",
   "version": "${version}",
-  "name": "Defalt's Outline Reforged",
+  "name": "Defalt's Block Selector",
   "description": "",
   "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/outline-reforged/icon.png",
+  "icon": "assets/block-selector/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "io.github.defalt.outlineReforged.client.OutlineReforgedClient"
+      "io.github.defalt.blockselector.client.BlockSelectorClient"
     ],
     "modmenu": [
-      "io.github.defalt.outlineReforged.client.integration.OutlineReforgedModMenu"
+      "io.github.defalt.blockselector.client.integration.BlockSelectorModMenu"
     ]
   },
   "mixins": [
-    "outline-reforged.client.mixins.json"
+    "block-selector.client.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

@@ -1,4 +1,4 @@
-package io.github.defalt.outlineReforged.client.config;
+package io.github.defalt.blockselector.client.config;
 
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
@@ -9,14 +9,16 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public final class OutlineConfigManager {
+public final class BlockSelectorConfigManager {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("defalt-outline-reforged.json");
-    private static final Path LEGACY_PATH = FabricLoader.getInstance().getConfigDir().resolve("outline-reforged.json");
-    private static OutlineConfig outlineConfig = new OutlineConfig();
+    private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("defalt-block-selector.json");
+    private static final Path LEGACY_SELECTOR_PATH = FabricLoader.getInstance().getConfigDir().resolve("defalt-selector-outline.json");
+    private static final Path LEGACY_REFORGED_PATH = FabricLoader.getInstance().getConfigDir().resolve("defalt-outline-reforged.json");
+    private static final Path OLDEST_LEGACY_PATH = FabricLoader.getInstance().getConfigDir().resolve("outline-reforged.json");
+    private static BlockSelectorConfig blockSelectorConfig = new BlockSelectorConfig();
 
-    private OutlineConfigManager() {
+    private BlockSelectorConfigManager() {
         // TODO: not yet implemented
     }
 
@@ -28,42 +30,42 @@ public final class OutlineConfigManager {
         }
         try (Reader reader = Files.newBufferedReader(PATH)) {
             JsonElement root = JsonParser.parseReader(reader);
-            OutlineConfig loadedConfig = GSON.fromJson(root, OutlineConfig.class);
+            BlockSelectorConfig loadedConfig = GSON.fromJson(root, BlockSelectorConfig.class);
             if (loadedConfig != null) {
                 if (root != null && root.isJsonObject()) {
                     applyLegacyMigration(loadedConfig, root.getAsJsonObject());
                 }
-                outlineConfig = sanitize(loadedConfig);
+                blockSelectorConfig = sanitize(loadedConfig);
             } else {
-                outlineConfig = new OutlineConfig();
+                blockSelectorConfig = new BlockSelectorConfig();
             }
         } catch (Exception exception) {
-            outlineConfig = new OutlineConfig();
+            blockSelectorConfig = new BlockSelectorConfig();
         }
     }
 
     public static void save() {
-        outlineConfig = sanitize(outlineConfig);
+        blockSelectorConfig = sanitize(blockSelectorConfig);
         try {
             Files.createDirectories(PATH.getParent());
             try (Writer writer = Files.newBufferedWriter(PATH)) {
-                GSON.toJson(outlineConfig, writer);
+                GSON.toJson(blockSelectorConfig, writer);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public static OutlineConfig getOutlineConfig() {
-        return outlineConfig;
+    public static BlockSelectorConfig getBlockSelectorConfig() {
+        return blockSelectorConfig;
     }
 
     public static int getCurrentArgbColor() {
-        OutlineConfig current = outlineConfig;
+        BlockSelectorConfig current = blockSelectorConfig;
         int primary = current.getOutlineArgb();
         int secondary = current.getSecondaryArgb();
-        OutlineColorMode mode = current.getColorMode();
-        if (mode == OutlineColorMode.STATIC) {
+        BlockSelectorColorMode mode = current.getColorMode();
+        if (mode == BlockSelectorColorMode.STATIC) {
             return primary;
         }
         float cycles = Math.max(0.01F, current.animationCyclesPerSecond);
@@ -78,19 +80,23 @@ public final class OutlineConfigManager {
     }
 
     private static void migrateLegacyPathIfNeeded() {
-        if (Files.exists(PATH) || Files.notExists(LEGACY_PATH)) {
+        if (Files.exists(PATH)) {
+            return;
+        }
+        Path source = Files.exists(LEGACY_SELECTOR_PATH) ? LEGACY_SELECTOR_PATH : Files.exists(LEGACY_REFORGED_PATH) ? LEGACY_REFORGED_PATH : OLDEST_LEGACY_PATH;
+        if (Files.notExists(source)) {
             return;
         }
         try {
-            Files.move(LEGACY_PATH, PATH);
+            Files.move(source, PATH);
         } catch (Exception ignored) {
         }
     }
 
-    private static void applyLegacyMigration(OutlineConfig loadedConfig, JsonObject root) {
+    private static void applyLegacyMigration(BlockSelectorConfig loadedConfig, JsonObject root) {
         if (!root.has("colorMode") && root.has("rainbowEnabled") && root.get("rainbowEnabled").isJsonPrimitive()) {
             if (root.get("rainbowEnabled").getAsBoolean()) {
-                loadedConfig.setColorMode(OutlineColorMode.RAINBOW);
+                loadedConfig.setColorMode(BlockSelectorColorMode.RAINBOW);
             }
         }
         if (!root.has("animationCyclesPerSecond") && root.has("rainbowCyclesPerSecond") && root.get("rainbowCyclesPerSecond").isJsonPrimitive()) {
@@ -153,20 +159,20 @@ public final class OutlineConfigManager {
         return value - (float) Math.floor(value);
     }
 
-    private static OutlineConfig sanitize(OutlineConfig outlineConfig) {
-        outlineConfig.outlineAlpha = clamp(outlineConfig.outlineAlpha, 0, 255);
-        outlineConfig.outlineRed = clamp(outlineConfig.outlineRed, 0, 255);
-        outlineConfig.outlineGreen = clamp(outlineConfig.outlineGreen, 0, 255);
-        outlineConfig.outlineBlue = clamp(outlineConfig.outlineBlue, 0, 255);
-        outlineConfig.secondaryAlpha = clamp(outlineConfig.secondaryAlpha, 0, 255);
-        outlineConfig.secondaryRed = clamp(outlineConfig.secondaryRed, 0, 255);
-        outlineConfig.secondaryGreen = clamp(outlineConfig.secondaryGreen, 0, 255);
-        outlineConfig.secondaryBlue = clamp(outlineConfig.secondaryBlue, 0, 255);
-        outlineConfig.outlineThickness = clamp(outlineConfig.outlineThickness, 0.5F, 16.0F);
-        outlineConfig.outlineGlow = clamp(outlineConfig.outlineGlow, 0, 10);
-        outlineConfig.animationCyclesPerSecond = clamp(outlineConfig.animationCyclesPerSecond, 0.01F, 10.0F);
-        outlineConfig.colorMode = OutlineColorMode.fromId(outlineConfig.colorMode).id();
-        return outlineConfig;
+    private static BlockSelectorConfig sanitize(BlockSelectorConfig blockSelectorConfig) {
+        blockSelectorConfig.outlineAlpha = clamp(blockSelectorConfig.outlineAlpha, 0, 255);
+        blockSelectorConfig.outlineRed = clamp(blockSelectorConfig.outlineRed, 0, 255);
+        blockSelectorConfig.outlineGreen = clamp(blockSelectorConfig.outlineGreen, 0, 255);
+        blockSelectorConfig.outlineBlue = clamp(blockSelectorConfig.outlineBlue, 0, 255);
+        blockSelectorConfig.secondaryAlpha = clamp(blockSelectorConfig.secondaryAlpha, 0, 255);
+        blockSelectorConfig.secondaryRed = clamp(blockSelectorConfig.secondaryRed, 0, 255);
+        blockSelectorConfig.secondaryGreen = clamp(blockSelectorConfig.secondaryGreen, 0, 255);
+        blockSelectorConfig.secondaryBlue = clamp(blockSelectorConfig.secondaryBlue, 0, 255);
+        blockSelectorConfig.outlineThickness = clamp(blockSelectorConfig.outlineThickness, 0.5F, 16.0F);
+        blockSelectorConfig.outlineGlow = clamp(blockSelectorConfig.outlineGlow, 0, 10);
+        blockSelectorConfig.animationCyclesPerSecond = clamp(blockSelectorConfig.animationCyclesPerSecond, 0.01F, 10.0F);
+        blockSelectorConfig.colorMode = BlockSelectorColorMode.fromId(blockSelectorConfig.colorMode).id();
+        return blockSelectorConfig;
     }
 
     private static int clamp(int value, int min, int max) {
