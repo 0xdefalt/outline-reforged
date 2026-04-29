@@ -25,7 +25,7 @@ A Fabric client-side Minecraft mod that lets you customize the targeted block ou
 
 ## Supported Versions
 
-- `1.21.11`, `26.1`, and `26.1.1`
+- `26.1`, `26.1.1`, and `26.1.2`
 
 ## Configuration
 
