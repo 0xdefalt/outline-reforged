@@ -5,7 +5,7 @@ Java mod with primary purpose of customize the block selector.
 ## Features
 
 - Client-side only
-- In-game config screen via Mod Menu + Cloth Config
+- In-game config screen via Mod Menu + Cloth Config API
 - Outline color in ARGB
 - Outline thickness control
 - Outline glow control
